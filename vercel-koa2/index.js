@@ -50,9 +50,9 @@ const upload = multer({
 
 // 确保下载目录存在
 const downloadDir = 'downloads';
-if (!fs.existsSync(downloadDir)) {
-  fs.mkdirSync(downloadDir, { recursive: true });
-}
+// if (!fs.existsSync(downloadDir)) {
+//   fs.mkdirSync(downloadDir, { recursive: true });
+// }
 
 // 转换历史存储
 let conversionHistory = [];
@@ -60,6 +60,9 @@ let conversionHistory = [];
 // API路由
 app.post('/api/convert', upload.single('pdf'), async (req, res) => {
   try {
+    if (!fs.existsSync(downloadDir)) {
+  fs.mkdirSync(downloadDir, { recursive: true });
+}
     if (!req.file) {
       return res.status(400).json({ error: '没有上传文件' });
     }
